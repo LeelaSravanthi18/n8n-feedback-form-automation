@@ -1,0 +1,144 @@
+{
+  "name": "My First N8N WorkFlow",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "KHR Rocking Updates",
+        "formDescription": "We are taking feedback from you",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Name",
+              "placeholder": "ex:Harry",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Email",
+              "fieldType": "email",
+              "placeholder": "ex:harry@gmail.com",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Feedback",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "d3a3a5f8-a5f8-4d90-9fcc-a6912f225c55",
+      "name": "On form submission",
+      "webhookId": "a0270408-131a-4517-ab31-c87d99ef837c"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1nyTb11V7i1_u2s9JTYRD67izO_QfOHintUNd2N2ZinA/edit?gid=0#gid=0",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1nyTb11V7i1_u2s9JTYRD67izO_QfOHintUNd2N2ZinA/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "useAppend": true
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        224,
+        -80
+      ],
+      "id": "fef837b5-17d9-4365-a30f-c9ede2ccd153",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "3YmvdLjJnfbfs9U3",
+          "name": "Google Sheets account - leelasravanthi56@gmail.com"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.Email }}",
+        "subject": "Thank you providing the feedback",
+        "emailType": "text",
+        "message": "=Hey  {{ $json.Name }},\n Thank you for taking the time to provide your feedback. I really appreciate it.\n\nBest regards,\nKHR Rocking updates",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        464,
+        -16
+      ],
+      "id": "28fa3f97-cab7-4d69-ac67-9e1e0ff0386f",
+      "name": "Send a message",
+      "webhookId": "1e27c002-54e6-4d00-8f1a-17dfbd9ca2c8",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "EqevJRaZTXwx3fNC",
+          "name": "Gmail account - leelasravanthi56@gmail.com"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "0cab75c9-1373-4976-a929-456b6fff9a13",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "1dd6478db668c483dc5d581d20709cda93ba57db94b28c196c73b7a84dbb9387"
+  },
+  "id": "qFI4iAdaTKLhBnSL",
+  "tags": []
+}
